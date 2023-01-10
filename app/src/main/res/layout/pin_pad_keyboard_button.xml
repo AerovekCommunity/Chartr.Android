@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+
+        <variable
+            name="passCodeViewModel"
+            type="org.aerovek.chartr.ui.passcode.PassCodeViewModel" />
+
+        <variable
+            name="pinPad"
+            type="org.aerovek.chartr.ui.passcode.PinPadModel" />
+
+        <variable
+            name="background"
+            type="android.graphics.drawable.Drawable" />
+
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <android.widget.Button
+            android:id="@+id/btn"
+            android:layout_width="0dp"
+            android:layout_height="64dp"
+            android:background="@{background}"
+            android:drawableTop="@{pinPad.background}"
+            android:text="@{pinPad.value}"
+            android:onClick="@{() -> passCodeViewModel.onClick(pinPad)}"
+            android:textColor="@color/black"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            tools:text="8"
+            tools:drawableTop="@drawable/ic_back_space" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

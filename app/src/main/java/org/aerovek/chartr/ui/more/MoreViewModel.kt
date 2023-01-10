@@ -1,0 +1,82 @@
+package org.aerovek.chartr.ui.more
+
+import android.app.Application
+import android.content.SharedPreferences
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.viewModelScope
+import com.hadilq.liveevent.LiveEvent
+import kotlinx.coroutines.launch
+import org.aerovek.chartr.data.model.elrond.address.Address
+import org.aerovek.chartr.data.repository.elrond.AccountRepository
+import org.aerovek.chartr.ui.AppConstants
+import org.aerovek.chartr.ui.BaseViewModel
+import org.aerovek.chartr.ui.adapterItems.MoreItemTapCallbacks
+import org.aerovek.chartr.ui.adapterItems.viewmodels.MoreItemViewModel
+import org.aerovek.chartr.util.DispatcherProvider
+import org.aerovek.chartr.util.NavigationEvent
+import java.math.BigInteger
+
+class MoreViewModel(
+    app: Application,
+    private val sharedPreferences: SharedPreferences,
+    accountRepository: AccountRepository,
+    dispatcherProvider: DispatcherProvider
+    ) : BaseViewModel(app), MoreItemTapCallbacks {
+
+    private val _navigationEvent = LiveEvent<NavigationEvent>()
+    val navigationEvent: LiveData<NavigationEvent> = _navigationEvent
+    val showNoBalanceMessage = LiveEvent<Unit>()
+    val showLoading = MutableLiveData(true)
+    val privacyPolicyTap = LiveEvent<Unit>()
+
+    private var egldBalance: BigInteger? = null
+
+    init {
+        viewModelScope.launch(dispatcherProvider.IO) {
+            // Only check balance if they already created a wallet
+            if (sharedPreferences.contains(AppConstants.UserPrefsKeys.USER_PIN)) {
+                val address = Address.fromBech32(
+                    sharedPreferences.getString(
+                        AppConstants.UserPrefsKeys.WALLET_ADDRESS,
+                        null
+                    )!!
+                )
+                egldBalance = try {
+                    val account = accountRepository.getAccount(address)
+                    account.balance
+                } catch (e: Exception) {
+                    BigInteger.ZERO
+                }
+                showLoading.postValue(false)
+            }
+        }
+    }
+
+    override fun onMoreItemTapped(vm: MoreItemViewModel) {
+        when (vm.type) {
+            MoreItemType.CreateAccount -> {
+                if (egldBalance != null && egldBalance == BigInteger.ZERO) {
+                    showNoBalanceMessage.postValue(Unit)
+                    return
+                }
+
+                if (sharedPreferences.contains(AppConstants.UserPrefsKeys.USER_PIN)) {
+                    _navigationEvent.postValue(NavigationEvent.Directions(
+                        MoreFragmentDirections.actionMoreFragmentToCreateAccountFragment()))
+                } else {
+                    _navigationEvent.postValue(NavigationEvent.Directions(
+                        MoreFragmentDirections.actionMoreFragmentToCreateWalletFragment()))
+                }
+
+                println("!!! CREATE ACCOUNT ITEM TAPPED")
+            }
+            MoreItemType.Settings -> {
+                println("!!! SETTINGS ITEM TAPPED")
+            }
+            MoreItemType.PrivacyPolicy -> {
+                privacyPolicyTap.postValue(Unit)
+            }
+        }
+    }
+}

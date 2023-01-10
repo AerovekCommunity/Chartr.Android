@@ -1,0 +1,124 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+        <variable
+            name="vm"
+            type="org.aerovek.chartr.ui.wallet.importwallet.ImportWalletViewModel" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/white">
+
+        <ProgressBar
+            android:id="@+id/progressBar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:indeterminate="true"
+            android:indeterminateTint="@color/aeroBlue"
+            android:visibility="gone"
+            style="?android:attr/progressBarStyleHorizontal"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            tools:visibility="visible" />
+
+        <androidx.core.widget.NestedScrollView
+            android:id="@+id/scrollView"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintHorizontal_bias="1.0"
+            app:layout_constraintVertical_bias="1.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/progressBar">
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <androidx.constraintlayout.widget.Guideline
+                    android:id="@+id/leftGutter"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    app:layout_constraintGuide_begin="16dp" />
+
+                <androidx.constraintlayout.widget.Guideline
+                    android:id="@+id/rightGutter"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    app:layout_constraintGuide_end="16dp" />
+
+                <TextView
+                    android:id="@+id/label"
+                    style="@style/BodyTextDark"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="16dp"
+                    android:text="@string/enter_recovery_phrase"
+                    android:textAlignment="center"
+                    app:layout_constraintEnd_toStartOf="@id/rightGutter"
+                    app:layout_constraintStart_toEndOf="@id/leftGutter"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/walletWordsList"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="16dp"
+                    android:background="@drawable/gray_border"
+                    android:minHeight="100dp"
+                    android:padding="8dp"
+                    app:layout_constraintEnd_toStartOf="@id/rightGutter"
+                    app:layout_constraintStart_toEndOf="@id/leftGutter"
+                    app:layout_constraintTop_toBottomOf="@id/label" />
+
+                <ImageButton
+                    android:id="@+id/clearWordsLabel"
+                    style="@style/LinkTextAeroBlue"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:padding="16dp"
+                    android:src="@drawable/ic_back_space"
+                    android:backgroundTint="@color/white"
+                    android:onClick="@{() -> vm.backspaceImageClicked() }"
+                    app:layout_constraintEnd_toStartOf="@id/rightGutter"
+                    app:layout_constraintTop_toBottomOf="@id/walletWordsList" />
+
+
+                <EditText
+                    android:id="@+id/editText"
+                    style="@style/TextInputEditText"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="16dp"
+                    android:layout_marginBottom="16dp"
+                    android:imeOptions="actionDone"
+                    android:inputType="text"
+                    app:layout_constraintEnd_toStartOf="@id/rightGutter"
+                    app:layout_constraintStart_toEndOf="@id/leftGutter"
+                    app:layout_constraintTop_toBottomOf="@id/clearWordsLabel"
+                    tools:text="dilemma" />
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/typeaheadResultsRecyclerView"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:padding="4dp"
+                    android:layout_marginBottom="64dp"
+                    app:layout_constraintStart_toEndOf="@id/leftGutter"
+                    app:layout_constraintEnd_toStartOf="@id/rightGutter"
+                    app:layout_constraintTop_toBottomOf="@id/editText"
+                    app:layout_constraintBottom_toBottomOf="parent" />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+        </androidx.core.widget.NestedScrollView>
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

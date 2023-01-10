@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+        <variable
+            name="vm"
+            type="org.aerovek.chartr.ui.media.MediaChooserViewModel" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/leftGutter"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layout_constraintGuide_begin="16dp" />
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/rightGutter"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layout_constraintGuide_end="16dp" />
+
+        <android.widget.Button
+            android:id="@+id/takePhotoBtn"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            style="@style/FilledButton"
+            android:layout_marginTop="16dp"
+            android:background="@color/black"
+            android:text="@string/take_photo"
+            android:onClick="@{() -> vm.takePhotoClicked()}"
+            app:layout_constraintEnd_toStartOf="@id/rightGutter"
+            app:layout_constraintStart_toEndOf="@id/leftGutter"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <android.widget.Button
+            android:id="@+id/chooseFromLibraryBtn"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            style="@style/FilledButton"
+            android:onClick="@{() -> vm.chooseFromLibraryClicked()}"
+            android:layout_marginTop="16dp"
+            android:background="@color/black"
+            android:text="@string/choose_from_library"
+            app:layout_constraintEnd_toStartOf="@id/rightGutter"
+            app:layout_constraintStart_toEndOf="@id/leftGutter"
+            app:layout_constraintTop_toBottomOf="@id/takePhotoBtn" />
+
+        <android.widget.Button
+            android:id="@+id/cancelBtn"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            style="@style/FilledButton"
+            android:onClick="@{() -> vm.cancelClicked()}"
+            android:textColor="@color/black"
+            android:layout_marginTop="16dp"
+            android:layout_marginBottom="16dp"
+            android:background="@color/disabledGray"
+            android:text="@string/cancel"
+            app:layout_constraintEnd_toStartOf="@id/rightGutter"
+            app:layout_constraintStart_toEndOf="@id/leftGutter"
+            app:layout_constraintTop_toBottomOf="@id/chooseFromLibraryBtn"
+            app:layout_constraintBottom_toBottomOf="parent" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

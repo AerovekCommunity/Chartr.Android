@@ -1,0 +1,229 @@
+plugins {
+    id 'com.android.application'
+    id 'org.jetbrains.kotlin.android'
+    id 'org.jetbrains.kotlin.kapt'
+    id 'com.google.gms.google-services'
+    id 'com.google.firebase.crashlytics'
+    id 'com.google.devtools.ksp'
+    id 'androidx.navigation.safeargs.kotlin'
+    id 'com.google.android.libraries.mapsplatform.secrets-gradle-plugin'
+}
+
+android {
+    compileSdk 32
+
+    defaultConfig {
+        applicationId "org.aerovek.chartr"
+        minSdk 26
+        targetSdk 32
+        // For example, if I want a versionName of 1.12.3
+        //  major = 1
+        //  minor = 12
+        //  patch = 3
+        //  hotfix = 0 (increment this each build to keep the same version name, up to 9 then you have to increment the patch by 1 and start the hotfix at 0, etc.
+        def major = 1 // 1-99
+        def minor = 0 // 0-99
+        def patch = 5 // 0-99
+        def hotfix = 0 // 0-9
+        versionCode getVersionCode(major, minor, patch, hotfix)
+        versionName = getVersionName(major, minor, patch)
+
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+    }
+
+    signingConfigs {
+        release {
+            storeFile file('../keystore/chartr-release.jks')
+            // TODO grab keystore and alias passwords from env variables
+            keyAlias "release"
+            storePassword "!ChartrD3v!"
+            keyPassword "!ChartrD3v!"
+        }
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+            signingConfig signingConfigs.release
+            resValue("string", "app_name", "Chartr")
+        }
+        debug {
+            versionNameSuffix "-debug"
+            debuggable true
+            resValue("string", "app_name", "Chartr Dev")
+        }
+        beta {
+            signingConfig signingConfigs.release
+            versionNameSuffix "-devnet"
+            resValue("string", "app_name", "Chartr Beta")
+        }
+    }
+
+    flavorDimensions "environment"
+    productFlavors {
+        internal {
+            dimension "environment"
+            versionNameSuffix "-internal"
+            buildConfigField("boolean", "INTERNAL", "true")
+            buildConfigField("boolean", "PRODUCTION", "false")
+        }
+
+        production {
+            dimension "environment"
+            buildConfigField("boolean", "INTERNAL", "false")
+            buildConfigField("boolean", "PRODUCTION", "true")
+        }
+    }
+
+    variantFilter { variant ->
+        //def names = variant.flavors*.name
+        // To check for a certain build type, use variant.buildType.name == "<buildType>"
+
+        // We don't care about these as we only want productionRelease available
+        if (name == "productionDebug" || name == "productionBeta" || name == "internalRelease") {
+            // Gradle ignores any variants that satisfy the conditions above.
+            setIgnore(true)
+        }
+    }
+
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+    kotlinOptions {
+        jvmTarget = '1.8'
+    }
+    namespace 'org.aerovek.chartr'
+}
+
+static def getVersionName(Integer major, Integer minor, Integer patch) {
+    println("----> VERSION NAME: ${major}.${minor}.${patch}")
+    return "${major}.${minor}.${patch}"
+}
+
+static def getVersionCode(Integer major, Integer minor, Integer patch, Integer hotfix) {
+    checkVersion(major in 1..<100, "major version number must be >= 1 and < 100")
+    checkVersion(minor in 0..<100, "minor version number must be >= 0 and < 100")
+    checkVersion(patch in 0..<100, "patch number must be >= 0 and < 100")
+    checkVersion(hotfix in 0..<10, "hotfix number must be >= 0 and < 10")
+
+    // Results in [mj][mn][pt][h]
+    def code = (major * 100000) + (minor * 1000) + (patch * 10) + hotfix
+    println("----> VERSION CODE: ${code}")
+    return code
+}
+
+static def checkVersion(Boolean isValid, String message) {
+    if (!isValid) {
+        throw IllegalStateException(message)
+    }
+}
+
+
+def koin_version = '3.2.0'
+def kotlin_coroutines_version = '1.5.2'
+def lifecycle_version = '2.5.1'
+def navigation_version = '2.5.1'
+def groupie_version = '2.9.0'
+def biometric_version = '1.1.0'
+def camerax_version = '1.2.0-alpha04'
+def glide_version = '4.13.2'
+
+dependencies {
+    implementation "androidx.biometric:biometric:$biometric_version"
+    implementation 'com.google.code.gson:gson:2.9.0'
+
+    //// Koin
+    // https://github.com/InsertKoinIO/koin
+    // https://github.com/InsertKoinIO/koin/blob/main/CHANGELOG.md
+    implementation "io.insert-koin:koin-android:$koin_version"
+    implementation "io.insert-koin:koin-android-compat:$koin_version"
+    implementation "io.insert-koin:koin-androidx-workmanager:$koin_version"
+    implementation "io.insert-koin:koin-androidx-navigation:$koin_version"
+    implementation "io.insert-koin:koin-androidx-compose:$koin_version"
+
+    //// Coroutines + Flow
+    // https://kotlinlang.org/docs/reference/coroutines/flow.html
+    // https://github.com/Kotlin/kotlinx.coroutines/blob/master/CHANGES.md
+    // https://github.com/Kotlin/kotlinx.coroutines/releases
+    implementation "org.jetbrains.kotlinx:kotlinx-coroutines-core:$kotlin_coroutines_version"
+    implementation "org.jetbrains.kotlinx:kotlinx-coroutines-android:$kotlin_coroutines_version"
+
+    //// Kotlin
+    implementation "org.jetbrains.kotlin:kotlin-reflect:$kotlin_version"
+
+    // https://commons.apache.org/proper/commons-codec/dependency-info.html
+    implementation 'commons-codec:commons-codec:1.15'
+
+    //// Firebase
+    implementation platform('com.google.firebase:firebase-bom:30.3.1')
+    // Add the dependency for the Firebase SDK for Google Analytics
+    // When using the BoM, don't specify versions in Firebase dependencies
+    // https://firebase.google.com/docs/android/setup#available-libraries
+    implementation 'com.google.firebase:firebase-analytics-ktx'
+    implementation 'com.google.firebase:firebase-crashlytics'
+    implementation 'com.google.firebase:firebase-storage-ktx'
+
+    //// General UI dependencies
+    implementation "androidx.core:core-splashscreen:1.0.0"
+    implementation "androidx.work:work-runtime-ktx:2.7.1" // required to avoid crash on Android 12 API 31
+    implementation "androidx.core:core-ktx:1.8.0"
+    implementation "androidx.appcompat:appcompat:1.5.0"
+    implementation "com.google.android.material:material:1.6.1"
+    implementation "androidx.constraintlayout:constraintlayout:2.1.4"
+    implementation "com.google.mlkit:barcode-scanning:17.0.2"
+
+    // Glide https://github.com/bumptech/glide
+    implementation "com.github.bumptech.glide:glide:$glide_version"
+
+    // CameraX https://developer.android.com/training/camerax
+    implementation "androidx.camera:camera-core:${camerax_version}"
+    implementation "androidx.camera:camera-camera2:${camerax_version}"
+    implementation "androidx.camera:camera-lifecycle:${camerax_version}"
+    implementation "androidx.camera:camera-video:${camerax_version}"
+    implementation "androidx.camera:camera-view:${camerax_version}"
+    implementation "androidx.camera:camera-extensions:${camerax_version}"
+
+    implementation("com.google.guava:guava:31.0.1-android")
+    // To use CallbackToFutureAdapter
+    implementation("androidx.concurrent:concurrent-futures:1.1.0")
+    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-guava:1.6.1")
+
+    implementation 'com.google.zxing:core:3.2.1'
+
+    //// Groupie recycler view binding
+    // https://github.com/lisawray/groupie
+    implementation "com.github.lisawray.groupie:groupie:$groupie_version"
+    implementation "com.github.lisawray.groupie:groupie-viewbinding:$groupie_version"
+
+    // Lifecycle
+    //https://developer.android.com/jetpack/androidx/releases/lifecycle#groovy
+    implementation "androidx.lifecycle:lifecycle-livedata-ktx:$lifecycle_version"
+    implementation "androidx.lifecycle:lifecycle-viewmodel-ktx:$lifecycle_version"
+    implementation "androidx.lifecycle:lifecycle-extensions:2.2.0"
+    implementation "com.github.hadilq:liveevent:1.3.0"
+
+    //// Navigation
+    // https://developer.android.com/jetpack/androidx/releases/navigation
+    implementation "androidx.navigation:navigation-fragment-ktx:$navigation_version"
+    implementation "androidx.navigation:navigation-ui-ktx:$navigation_version"
+    implementation 'androidx.legacy:legacy-support-v4:1.0.0'
+
+    //// Maps
+    implementation 'com.google.android.gms:play-services-maps:18.1.0'
+    implementation 'com.google.android.gms:play-services-location:20.0.0'
+
+
+    //// Test dependencies
+
+    testImplementation 'junit:junit:4.13.2'
+    testImplementation "io.insert-koin:koin-test:$koin_version"
+    androidTestImplementation 'androidx.test.ext:junit:1.1.3'
+    androidTestImplementation 'androidx.test.espresso:espresso-core:3.4.0'
+
+    //// Project dependencies
+
+    // data project dependency
+    implementation project(path: ':data')
+}

@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <item android:id="@id/homeFragment"
+        android:title="@string/discover_title"
+        android:icon="@drawable/ic_airplanemode_active_24" />
+
+    <item android:id="@id/walletFragment"
+        android:title="@string/wallet_title"
+        android:icon="@drawable/ic_outline_account_wallet_48" />
+
+    <item android:id="@id/myAccountFragment"
+        android:title="@string/account_title"
+        android:icon="@drawable/ic_person" />
+
+    <item android:id="@id/moreFragment"
+        android:title="@string/more_title"
+        android:icon="@drawable/ic_more_horiz_24" />
+</menu>

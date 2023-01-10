@@ -1,0 +1,54 @@
+{
+  "project_info": {
+    "project_number": "430526050106",
+    "project_id": "aerovek-aviation",
+    "storage_bucket": "aerovek-aviation.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:430526050106:android:4a917e7d4850cec4cd2a03",
+        "android_client_info": {
+          "package_name": "org.aerovek.chartr"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "430526050106-7898evecf4nmbgdgou949o7d1pbar6k1.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "org.aerovek.chartr",
+            "certificate_hash": "758618785133631a56b8cff910f746c0ed386960"
+          }
+        },
+        {
+          "client_id": "430526050106-v9ouiugs6gh2busbenh4p998oi0g740i.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyB4_ow-X-ZWpo25YfFOl1aqN4LaDEh6l_M"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "430526050106-v9ouiugs6gh2busbenh4p998oi0g740i.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "430526050106-df3skcij8qdrc0pdih2lcbn965esk386.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.aerovek.chartr"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

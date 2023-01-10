@@ -1,0 +1,244 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+        <import type="android.view.View" />
+        <variable
+            name="vm"
+            type="org.aerovek.chartr.ui.wallet.transaction.ConfirmTransferViewModel" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/white">
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/leftGutter"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layout_constraintGuide_begin="16dp" />
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/rightGutter"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layout_constraintGuide_end="16dp" />
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            android:visibility="@{vm.showLoadingView ? View.VISIBLE : View.GONE}">
+
+            <ProgressBar
+                android:id="@+id/progressBar1"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                android:indeterminate="true"
+                android:indeterminateTint="@color/aeroBlue" />
+
+        </RelativeLayout>
+
+
+        <ImageView
+            android:id="@+id/closeButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/ic_close"
+            android:onClick="@{() -> vm.closeClicked()}"
+            android:padding="8dp"
+            android:layout_marginTop="8dp"
+            android:contentDescription="@string/close"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintStart_toEndOf="@id/leftGutter"
+            app:tint="@color/black" />
+
+        <TextView
+            android:id="@+id/titleLabel"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:layout_marginEnd="24dp"
+            android:text="@string/confirm_transfer_title"
+            style="@style/HeadlineTextMediumBlack"
+            android:textAlignment="center"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintStart_toEndOf="@id/closeButton"
+            app:layout_constraintEnd_toStartOf="@id/rightGutter" />
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/mainContentContainer"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:visibility="@{vm.showLoadingView ? View.GONE : View.VISIBLE}"
+            app:layout_constraintTop_toBottomOf="@id/titleLabel"
+            app:layout_constraintStart_toEndOf="@id/leftGutter"
+            app:layout_constraintEnd_toStartOf="@id/rightGutter">
+
+            <TextView
+                android:id="@+id/transferAmountLabel"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="80dp"
+                android:text="@{vm.transferAmount}"
+                style="@style/HeadlineTextGiantBlack"
+                android:textAlignment="center"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                tools:text="-1500 AERO" />
+
+            <TextView
+                android:id="@+id/usdAmountLabel"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="4dp"
+                android:text="@{vm.usdAmount}"
+                android:visibility="gone"
+                style="@style/BodyTextDark"
+                android:textAlignment="center"
+                app:layout_constraintTop_toBottomOf="@id/transferAmountLabel"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                tools:text="~ $59.27" />
+
+            <androidx.cardview.widget.CardView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:background="@drawable/gradient_grey"
+                app:cardUseCompatPadding="true"
+                app:cardCornerRadius="8dp"
+                android:elevation="4dp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent" >
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:padding="16dp" >
+
+                    <TextView
+                        android:id="@+id/toLabel"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:textStyle="bold"
+                        style="@style/BodyTextDark"
+                        android:textSize="14sp"
+                        android:text="@string/to_title"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <TextView
+                        android:id="@+id/recipient"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="16dp"
+                        android:textColor="@color/hintGray"
+                        style="@style/BodyTextDark"
+                        android:textSize="14sp"
+                        android:textAlignment="textEnd"
+                        android:text="@{vm.truncatedAddress}"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toEndOf="@id/toLabel"
+                        tools:text="erd1kfjr4848kd...294kdkfkfk0s" />
+
+                    <TextView
+                        android:id="@+id/feeLabel"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="16dp"
+                        android:textStyle="bold"
+                        android:visibility="gone"
+                        style="@style/BodyTextDark"
+                        android:textSize="14sp"
+                        android:text="@string/network_fee_title"
+                        app:layout_constraintTop_toBottomOf="@id/recipient"
+                        app:layout_constraintStart_toStartOf="parent" />
+
+                    <ImageView
+                        android:id="@+id/infoImage"
+                        android:layout_width="24dp"
+                        android:layout_height="24dp"
+                        android:background="@drawable/button_round_grey_32"
+                        android:visibility="gone"
+                        android:layout_marginTop="12dp"
+                        android:layout_marginStart="8dp"
+                        android:src="@drawable/ic_outline_info_24"
+                        android:contentDescription="Info"
+                        app:layout_constraintStart_toEndOf="@id/feeLabel"
+                        app:layout_constraintTop_toBottomOf="@id/recipient"
+                        />
+
+                    <TextView
+                        android:id="@+id/networkFee"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="16dp"
+                        android:visibility="gone"
+                        android:layout_marginStart="8dp"
+                        android:textColor="@color/hintGray"
+                        style="@style/BodyTextDark"
+                        android:textAlignment="textEnd"
+                        android:textSize="14sp"
+                        android:text="@{vm.networkFee}"
+                        app:layout_constraintTop_toBottomOf="@id/recipient"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        tools:text="0.00005 eGLD ($0.00)" />
+
+                    <TextView
+                        android:id="@+id/totalLabel"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="16dp"
+                        android:textStyle="bold"
+                        style="@style/BodyTextDark"
+                        android:textSize="14sp"
+                        android:text="@string/total_usd_title"
+                        app:layout_constraintTop_toBottomOf="@id/networkFee"
+                        app:layout_constraintStart_toStartOf="parent" />
+
+                    <TextView
+                        android:id="@+id/total"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="16dp"
+                        android:textColor="@color/black"
+                        style="@style/BodyTextDark"
+                        android:textAlignment="textEnd"
+                        android:textSize="14sp"
+                        android:text="@{vm.usdAmount}"
+                        app:layout_constraintTop_toBottomOf="@id/networkFee"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        tools:text="$120.05" />
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+            </androidx.cardview.widget.CardView>
+
+            <android.widget.Button
+                android:id="@+id/confirmButton"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                style="@style/FilledButton"
+                android:background="@color/black"
+                android:onClick="@{() -> vm.continueClicked()}"
+                android:text="@string/confirm_title"
+                android:layout_marginBottom="96dp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

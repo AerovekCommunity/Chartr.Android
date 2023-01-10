@@ -1,0 +1,97 @@
+package org.aerovek.chartr.ui.account
+
+import android.os.Bundle
+import android.view.LayoutInflater
+import android.view.View
+import android.view.ViewGroup
+import androidx.databinding.DataBindingUtil
+import androidx.fragment.app.Fragment
+import androidx.lifecycle.viewModelScope
+import androidx.navigation.fragment.findNavController
+import androidx.viewpager2.adapter.FragmentStateAdapter
+import com.google.android.material.tabs.TabLayout
+import com.google.android.material.tabs.TabLayoutMediator
+import kotlinx.coroutines.async
+import kotlinx.coroutines.launch
+import org.aerovek.chartr.R
+import org.aerovek.chartr.databinding.AccountFragmentBinding
+import org.aerovek.chartr.ui.BaseFragment
+import org.aerovek.chartr.util.DialogModel
+import org.aerovek.chartr.util.DispatcherProvider
+import org.aerovek.chartr.util.showGenericDialog
+import org.koin.android.ext.android.inject
+
+class AccountFragment : BaseFragment() {
+    private val viewModel: AccountViewModel by inject()
+    lateinit var binding: AccountFragmentBinding
+    private val dispatcherProvider: DispatcherProvider by inject()
+    private lateinit var pagerAdapter: AccountPageAdapter
+    private var fragmentList: List<Fragment> = listOf()
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+
+        fragmentList = listOf(
+            ProfileFragment.newInstance()
+        )
+
+        viewModel.viewModelScope.launch(dispatcherProvider.IO) {
+            val chartrAccount = (async { viewModel.retrieveAccount() }).await()
+            if (chartrAccount == null) {
+                viewModel.viewModelScope.launch(dispatcherProvider.Main) {
+                    showGenericDialog(
+                        requireContext(),
+                        DialogModel(
+                            title = null,
+                            message = R.string.account_processing,
+                            positive = R.string.ok,
+                            negative = R.string.back_title,
+                            positiveFun = { findNavController().popBackStack( R.id.homeFragment, false ) },
+                            negativeFun = { findNavController().popBackStack( R.id.homeFragment, false ) },
+                            exitVisibility = View.GONE
+                        ), dismissListener = null
+                    )
+                }
+            }
+        }
+    }
+
+    override fun onCreateView(
+        inflater: LayoutInflater, container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View? {
+        return DataBindingUtil.inflate<AccountFragmentBinding>(inflater, R.layout.account_fragment, container, false).apply {
+            vm = viewModel
+            binding = this
+            lifecycleOwner = viewLifecycleOwner
+
+            setupBackPressListener {
+                findNavController().popBackStack(R.id.homeFragment, false)
+            }
+
+        }.root
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+
+        pagerAdapter = AccountPageAdapter(this@AccountFragment)
+        binding.viewPager.adapter = pagerAdapter
+
+        val tabLayout: TabLayout = binding.tabLayout
+        TabLayoutMediator(tabLayout, binding.viewPager) { tab, position ->
+            println("TabLayoutMediator called with - tab: ${tab.id}, position: $position")
+            when (position) {
+                0 -> tab.text = getString(R.string.profile_title)
+            }
+        }.attach()
+    }
+
+    private inner class AccountPageAdapter(fragment: Fragment) : FragmentStateAdapter(fragment) {
+        override fun getItemCount(): Int = fragmentList.size
+
+        override fun createFragment(position: Int): Fragment {
+            return fragmentList[position]
+        }
+    }
+}

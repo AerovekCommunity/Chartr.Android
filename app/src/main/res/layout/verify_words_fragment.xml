@@ -1,0 +1,158 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+        <variable
+            name="vm"
+            type="org.aerovek.chartr.ui.wallet.verifywords.VerifyWordsViewModel" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/white">
+
+        <androidx.core.widget.NestedScrollView
+            android:id="@+id/scrollView"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintHorizontal_bias="1.0"
+            app:layout_constraintVertical_bias="1.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <androidx.constraintlayout.widget.Guideline
+                    android:id="@+id/leftGutter"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    app:layout_constraintGuide_begin="16dp" />
+
+                <androidx.constraintlayout.widget.Guideline
+                    android:id="@+id/rightGutter"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    app:layout_constraintGuide_end="16dp" />
+
+                <TextView
+                    android:id="@+id/title"
+                    style="@style/HeadlineTextMediumBlack"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="16dp"
+                    android:text="@string/verify_words"
+                    android:textAlignment="center"
+                    app:layout_constraintEnd_toStartOf="@id/rightGutter"
+                    app:layout_constraintStart_toEndOf="@id/leftGutter"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <TextView
+                    android:id="@+id/enterWord1Label"
+                    style="@style/BodyTextDark"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="24dp"
+                    android:text="@{vm.enterWordLabel1}"
+                    app:layout_constraintEnd_toStartOf="@id/rightGutter"
+                    app:layout_constraintStart_toEndOf="@id/leftGutter"
+                    app:layout_constraintTop_toBottomOf="@id/title"
+                    tools:text="Enter word #4" />
+
+                <EditText
+                    android:id="@+id/wordEntry1"
+                    style="@style/TextInputEditText"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="16dp"
+                    android:inputType="text"
+                    app:layout_constraintEnd_toStartOf="@id/rightGutter"
+                    app:layout_constraintStart_toEndOf="@id/leftGutter"
+                    app:layout_constraintTop_toBottomOf="@id/enterWord1Label"
+                    tools:text="dilemma" />
+
+                <TextView
+                    android:id="@+id/enterWord2Label"
+                    style="@style/BodyTextDark"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="16dp"
+                    android:text="@{vm.enterWordLabel2}"
+                    app:layout_constraintEnd_toStartOf="@id/rightGutter"
+                    app:layout_constraintStart_toEndOf="@id/leftGutter"
+                    app:layout_constraintTop_toBottomOf="@id/wordEntry1"
+                    tools:text="Enter word #7" />
+
+                <EditText
+                    android:id="@+id/wordEntry2"
+                    style="@style/TextInputEditText"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="16dp"
+                    android:inputType="text"
+                    app:layout_constraintEnd_toStartOf="@id/rightGutter"
+                    app:layout_constraintStart_toEndOf="@id/leftGutter"
+                    app:layout_constraintTop_toBottomOf="@id/enterWord2Label"
+                    tools:text="garbage" />
+
+                <TextView
+                    android:id="@+id/enterWord3Label"
+                    style="@style/BodyTextDark"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="16dp"
+                    android:text="@{vm.enterWordLabel3}"
+                    app:layout_constraintEnd_toStartOf="@id/rightGutter"
+                    app:layout_constraintStart_toEndOf="@id/leftGutter"
+                    app:layout_constraintTop_toBottomOf="@id/wordEntry2"
+                    tools:text="Enter word #18" />
+
+                <EditText
+                    android:id="@+id/wordEntry3"
+                    style="@style/TextInputEditText"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="16dp"
+                    android:inputType="text"
+                    app:layout_constraintEnd_toStartOf="@id/rightGutter"
+                    app:layout_constraintStart_toEndOf="@id/leftGutter"
+                    app:layout_constraintTop_toBottomOf="@id/enterWord3Label"
+                    tools:text="fancy" />
+
+                <TextView
+                    android:id="@+id/enterWord4Label"
+                    style="@style/BodyTextDark"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="16dp"
+                    android:text="@{vm.enterWordLabel4}"
+                    app:layout_constraintEnd_toStartOf="@id/rightGutter"
+                    app:layout_constraintStart_toEndOf="@id/leftGutter"
+                    app:layout_constraintTop_toBottomOf="@id/wordEntry3"
+                    tools:text="Enter word #1" />
+
+                <EditText
+                    android:id="@+id/wordEntry4"
+                    style="@style/TextInputEditText"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="16dp"
+                    android:inputType="text"
+                    app:layout_constraintEnd_toStartOf="@id/rightGutter"
+                    app:layout_constraintStart_toEndOf="@id/leftGutter"
+                    app:layout_constraintTop_toBottomOf="@id/enterWord4Label"
+                    tools:text="dog" />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+        </androidx.core.widget.NestedScrollView>
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</layout>
