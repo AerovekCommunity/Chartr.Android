@@ -1,5 +1,5 @@
 <p align="center">
-<img width="450" src="./app/src/main/assets/readmeAssets/chartr_logo.png?raw=true" alt="Chartr logo">
+<img width="450" src="./docs/images/chartr_logo.png?raw=true" alt="Chartr logo">
 </p>
 
 <h1 align="center">
