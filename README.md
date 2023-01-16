@@ -15,7 +15,7 @@ Refer to the [Developer Guide](./docs/DEVELOPER_GUIDE.md) to get an idea how the
 
 All work done on the Chartr app happens directly on [GitHub](https://github.com/AerovekCommunity/Chartr.Android). Both core team members and external contributors send pull requests which go through the same review process.
 
-If you are interested in contributing directly to the code base, the first thing you should do is read our [Litepaper](./docs/LITEPAPER.md) to get an understanding of what Chartr is and how it's supposed to work. 
+If you are interested in contributing directly to the code base, the first thing you should do is read our [Litepaper](https://github.com/AerovekCommunity/litepaper) to get an understanding of what Chartr is and how it's supposed to work. 
 
 You can also join our Telegram and Discord channels and ask questions there. 
 
