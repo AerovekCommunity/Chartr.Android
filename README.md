@@ -7,7 +7,7 @@ Aviation on the Blockchain
 </h1>
 <br />
 
-## Documentation 8=====D
+## Documentation
 
 Refer to the [Developer Guide](./docs/DEVELOPER_GUIDE.md) to get an idea how the app was structured, and how to build and package the app.
 
