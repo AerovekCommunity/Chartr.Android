@@ -10,8 +10,7 @@ data class NetworkEconomics(
     val marketCap: BigInteger,
     val apr: Double,
     val topUpApr: Double,
-    val baseApr: Double,
-    val tokenMarketCap: BigInteger,
+    val baseApr: Double
 ) {
     // keep it to allow companion extension
     companion object

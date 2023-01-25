@@ -91,7 +91,6 @@ class SendAeroViewModel(
                 println("APR = ${economics.apr}")
                 println("TOP UP APR = ${economics.topUpApr}")
                 println("BASE APR = ${economics.baseApr}")
-                println("TOKEN MARKET CAP = ${economics.tokenMarketCap}")
 
 
                 val address = Address.fromBech32(sharedPreferences.getString(AppConstants.UserPrefsKeys.WALLET_ADDRESS, null)!!)

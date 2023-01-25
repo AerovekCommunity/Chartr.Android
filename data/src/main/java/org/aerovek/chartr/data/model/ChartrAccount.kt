@@ -12,25 +12,25 @@ data class PilotDetails(
     val firstName: String,
     val lastName: String,
     val email: String?,
-    val certificates: List<PilotCertificate>?,
+    val certificates: String?,
     val qualifications: String?,
     val bio: String?,
-    val flightTimeHours: Int?,
+    val flightTimeHours: String?,
     val ratingsExpirationDate: String?,
     val ratings: String?
 )
 
 data class AircraftDetails(
-    val model: String,
-    val description: String,
-    val typeDesignator: String,
-    val wtc: String,
-    val manufacturerCode: String,
-    val engineType: String,
-    val engineCount: Int,
-    val seatCapacity: Int,
-    val weightLimit: Int,
-    val rangeInNauticalMiles: Int,
+    val model: String?,
+    val description: String?,
+    val typeDesignator: String?,
+    val wtc: String?,
+    val manufacturerCode: String?,
+    val engineType: String?,
+    val engineCount: Int?,
+    val seatCapacity: Int?,
+    val weightLimit: Int?,
+    val rangeInNauticalMiles: Int?,
     val specialEquipment: String?
 )
 

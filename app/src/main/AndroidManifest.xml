@@ -32,7 +32,7 @@
 
         <meta-data
             android:name="com.google.android.geo.API_KEY"
-            android:value="${MAPS_API_KEY}" />
+            android:value="AIzaSyB93FFfK-yi7MUO5Bg1q1bvnj4UvSojbu0" />
 
         <provider
             android:name="org.aerovek.chartr.util.ChartrFileProvider"
