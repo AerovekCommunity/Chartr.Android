@@ -19,6 +19,19 @@ If you are interested in contributing directly to the code base, the first thing
 
 Then in the AeroDAO Telegram channel ask to be added as a contributor and provide the email associated with your github account.
 
+## Downloading the beta version
+The beta version is useful in case you are not a developer and would like to contribute by playing with the app and proposing new features or reporting bugs that you find. 
+Keep in mind that it is not going to be the latest version. If you'd like to request a new beta build, please create a issue ticket for that.
+
+If you'd like to have access to the beta version please follow these steps
+
+- Request access by [creating a new issue](https://github.com/AerovekCommunity/Chartr.Android/issues/new)
+- Title it "Requesting beta access"
+- In the comment section add your Gmail address that you use to access the Google Play store on your phone
+- You will then get an email with a link to sign up for the beta program. *IMPORTANT* Open this link from your phone and make sure you are signed into the same account you provided in the issue
+- Follow the instructions to download the app from the store. It will say (Internal Beta) next to the app name
+
+
 ## **Submitting Code Changes**
 1. Create an issue describing the bugfix or feature you plan to work on. Here's one that has been created already - [Implement Transaction Details](https://github.com/AerovekCommunity/Chartr.Android/issues/1), or if one exists already that you want to work on just assign yourself to it.
 2. Create a branch off of `main` and name it something that describes the issue. First make sure your main branch is up to date
@@ -35,7 +48,6 @@ Then in the AeroDAO Telegram channel ask to be added as a contributor and provid
     ```
 4. Create a pull request from your branch into main and ask a core contributor to review it
 5. Once the pull request is approved you can merge your branch into main
-
 
 You can also join our Telegram and Discord channels and ask questions there. 
 
