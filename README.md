@@ -17,8 +17,6 @@ All work done on the Chartr app happens directly on [GitHub](https://github.com/
 
 If you are interested in contributing directly to the code base, the first thing you should do is read our [Litepaper](https://github.com/AerovekCommunity/litepaper) to get an understanding of what Chartr is and how it's supposed to work. 
 
-Then in the AeroDAO Telegram channel ask to be added as a contributor and provide the email associated with your github account.
-
 ## Downloading the beta version
 The beta version is useful in case you are not a developer and would like to contribute by playing with the app and proposing new features or reporting bugs that you find. 
 Keep in mind that it is not going to be the latest version. If you'd like to request a new beta build, please create a issue ticket for that.
