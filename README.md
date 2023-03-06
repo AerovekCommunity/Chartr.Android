@@ -21,13 +21,9 @@ If you are interested in contributing directly to the code base, the first thing
 The beta version is useful in case you are not a developer and would like to contribute by playing with the app and proposing new features or reporting bugs that you find. 
 Keep in mind that it is not going to be the latest version. If you'd like to request a new beta build, please create a issue ticket for that.
 
-If you'd like to have access to the beta version please follow these steps
+You can download the current beta version by opening this link from your Android device
 
-- Request access by [creating a new issue](https://github.com/AerovekCommunity/Chartr.Android/issues/new)
-- Title it "Requesting beta access"
-- In the comment section add your Gmail address that you use to access the Google Play store on your phone
-- You will then get an email with a link to sign up for the beta program. *IMPORTANT* Open this link from your phone and make sure you are signed into the same account you provided in the issue
-- Follow the instructions to download the app from the store. It will say (Internal Beta) next to the app name
+https://play.google.com/store/apps/details?id=org.aerovek.chartr
 
 
 ## **Submitting Code Changes**
